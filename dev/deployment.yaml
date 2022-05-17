@@ -1,19 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+  clusterIP: None
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< Updated upstream
   name: myapp-deployment
+=======
+  name: mysql
+>>>>>>> Stashed changes
 spec:
   selector:
     matchLabels:
-      app: myapp
-  replicas: 2
+      app: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
-        app: myapp
+        app: mysql
     spec:
       containers:
+<<<<<<< Updated upstream
       - name: myapp
         image: nanajanashia/argocd-app:1.0
+=======
+      - image: mysql:5.6
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+>>>>>>> Stashed changes
         ports:
-        - containerPort: 8080
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
