@@ -12,11 +12,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-<<<<<<< Updated upstream
-  name: myapp-deployment
-=======
   name: mysql
->>>>>>> Stashed changes
 spec:
   selector:
     matchLabels:
@@ -29,17 +25,12 @@ spec:
         app: mysql
     spec:
       containers:
-<<<<<<< Updated upstream
-      - name: myapp
-        image: nanajanashia/argocd-app:1.0
-=======
       - image: mysql:5.6
         name: mysql
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
           value: password
->>>>>>> Stashed changes
         ports:
         - containerPort: 3306
           name: mysql
@@ -50,4 +41,3 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
-
