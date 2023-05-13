@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: yunikorn
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/sriram-gv/argocd-app-config.git
+    targetRevision: HEAD
+    path: yunikorn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: yunikorn
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
